@@ -21,16 +21,15 @@ services:
   todo-app:
     container_name: todo-go-app
     build: ./
-    environment:
-      - TERM=xterm
     ports:
       - "${APP_PORT}:${APP_PORT}"
     depends_on:
       db:
         condition: service_healthy
-    #environment:
-     # - DATABASE_URL=postgres://${DB_USER_NAME}:${DB_PASSWORD}@postgres-db:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}
-    #command: bash -c "/usr/local/bin/migrate -path ./schema -database 'postgres://${DB_USER_NAME}:${DB_PASSWORD}@postgres-db:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}' up"
+    environment:
+      - TERM=xterm
+      - DATABASE_URL=postgres://${DB_USER_NAME}:${DB_PASSWORD}@postgres-db:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}
+    command: bash -c "/usr/local/bin/migrate -path ./schema -database 'postgres://${DB_USER_NAME}:${DB_PASSWORD}@postgres-db:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}' up"
     healthcheck:
       test: [ "CMD-SHELL", "pgrep -f todo-go-app" ]
       interval: 10s

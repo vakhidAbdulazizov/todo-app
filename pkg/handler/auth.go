@@ -87,6 +87,18 @@ func (h *Handler) singUp(c *gin.Context) {
 	})
 }
 
+// @Summary ForgotPassword
+// @Tags auth
+// @Description forgot password
+// @ID forgot-password
+// @Accept  json
+// @Produce  json
+// @Param input body forgotPasswordInput true "forgot password"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} Error
+// @Failure 500 {object} Error
+// @Failure default {object} Error
+// @Router /auth/forgot-password [post]
 func (h *Handler) forgotPass(c *gin.Context) {
 	var input forgotPasswordInput
 
@@ -106,6 +118,18 @@ func (h *Handler) forgotPass(c *gin.Context) {
 	})
 }
 
+// @Summary RestorePassword
+// @Tags auth
+// @Description Restore password
+// @ID restore-password
+// @Accept  json
+// @Produce  json
+// @Param input body restorePasswordInput true "restore password"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} Error
+// @Failure 500 {object} Error
+// @Failure default {object} Error
+// @Router /auth/restore-password [post]
 func (h *Handler) restorePassword(c *gin.Context) {
 	var input restorePasswordInput
 

@@ -12,6 +12,26 @@ definitions:
           $ref: '#/definitions/models.TodoList'
         type: array
     type: object
+  handler.forgotPasswordInput:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  handler.restorePasswordInput:
+    properties:
+      confirmKey:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - confirmKey
+    - email
+    - password
+    type: object
   handler.signInInput:
     properties:
       password:
@@ -499,6 +519,84 @@ paths:
       summary: Create item in todo list
       tags:
       - items
+  /auth/forgot-password:
+    post:
+      consumes:
+      - application/json
+      description: forgot password
+      operationId: forgot-password
+      parameters:
+      - description: forgot password
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.forgotPasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Error'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.Error'
+      summary: ForgotPassword
+      tags:
+      - auth
+  /auth/restore-password:
+    post:
+      consumes:
+      - application/json
+      description: Restore password
+      operationId: restore-password
+      parameters:
+      - description: restore password
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.restorePasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Error'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.Error'
+      summary: RestorePassword
+      tags:
+      - auth
   /auth/sign-in:
     post:
       consumes:

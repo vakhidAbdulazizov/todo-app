@@ -36,12 +36,12 @@ func main() {
 	}
 
 	db, err := repository.NewPostgresDb(repository.Config{
-		Host:     os.Getenv("DB_HOST"),
-		Port:     os.Getenv("DB_PORT"),
-		Username: os.Getenv("DB_USER_NAME"),
-		Password: os.Getenv("DB_PASSWORD"),
-		DBName:   os.Getenv("DB_NAME"),
-		SSLMode:  os.Getenv("DB_SSLMODE"),
+		Host:     "postgres-db",        //os.Getenv("DB_HOST"),
+		Port:     "5432",               //os.Getenv("DB_PORT"),
+		Username: "postgres",           //os.Getenv("DB_USER_NAME"),
+		Password: "todo-app-passwword", //os.Getenv("DB_PASSWORD"),
+		DBName:   "postgres",           //os.Getenv("DB_NAME"),
+		SSLMode:  "disable",            //os.Getenv("DB_SSLMODE"),
 	})
 
 	if err != nil {
@@ -53,7 +53,8 @@ func main() {
 	handlers := handler.NewHandler(services)
 	srv := new(todo.Server)
 	go func() {
-		err = srv.Run(os.Getenv("APP_PORT"), handlers.InitRoutes())
+		// os.Getenv("APP_PORT")
+		err = srv.Run("8003", handlers.InitRoutes())
 		if err != nil {
 			logrus.Fatalf("error run server: %s", err.Error())
 		}
